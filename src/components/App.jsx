@@ -16,16 +16,19 @@ export class App extends Component {
   };
 
   componentDidMount() {
-      const savedState = localStorage.getItem(LS_KEY);
+    const savedState = localStorage.getItem(LS_KEY);
+    const parsedState = JSON.parse(savedState);
 
-      if(savedState) {
-        this.setState({ contacts: savedState });
-      }
-    };
+    if(parsedState) {
+      this.setState({ contacts: parsedState });
+    }
+  };
 
   componentDidUpdate(_, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem(LS_KEY, this.state.contacts);
+    const contacts = this.state.contacts;
+
+    if (prevState.contacts !== contacts) {
+      localStorage.setItem(LS_KEY, JSON.stringify(contacts));
     }
   };
 
